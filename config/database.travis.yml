@@ -1,0 +1,4 @@
+test:
+  adapter: postgresql
+  database: neon_pto_test
+  username: postgres
