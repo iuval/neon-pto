@@ -31,6 +31,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 gem 'devise'
+gem 'omniauth-google-oauth2'
 
 gem 'haml-rails'
 
