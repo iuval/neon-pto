@@ -1,5 +1,5 @@
 NeonPto::Application.routes.draw do
-  resources :reports
+  resources :reports, only: [:index, :show, :new, :create]
 
   devise_for :users,
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
