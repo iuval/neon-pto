@@ -4,6 +4,27 @@
     %title NeonPto
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag "application", "data-turbolinks-track" => true
+    %script{src: "//code.jquery.com/jquery-1.10.2.min.js"}
     = csrf_meta_tags
+    %meta{charset: "utf-8"}/
+    %meta{content: "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+    %meta{content: "", name: "description"}/
+    %meta{content: "", name: "author"}/
+    %link{href: "../../docs-assets/ico/favicon.png", rel: "shortcut icon"}/
+    %title Neon PTO
   %body
-    = yield
+    / Fixed navbar
+    .navbar.navbar-default.navbar-fixed-top{role: "navigation"}
+      .container
+        .collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li
+              %img{src: "http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=50"}/
+            %li.active
+              %a{href: "#"} Reports
+            %li
+              %a{href: "#about"} About
+        / /.nav-collapse
+    .container
+      = yield

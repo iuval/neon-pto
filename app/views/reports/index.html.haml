@@ -1,22 +1,23 @@
-%h1 Listing reports
-
-%table
-  %tr
-    %th User
-    %th Body
-    %th Title
-    %th Date
-    %th
-    %th
-    %th
-
-  - @reports.each do |report|
-    %tr
-      %td= report.user.email
-      %td= report.title
-      %td= report.date
-      %td= link_to 'Show', report
-
-%br
+%h1= "List of reports from #{ Date.today.strftime("%B") }"
+%p.lead Read, rate, enjoy!
 
 = link_to 'New Report', new_report_path
+
+.container
+  .row
+    - @reports.each do |report|
+      %ul.list-group
+        %li.list-group-item
+          .row
+            .col-xs-2.col-md-1
+              %img.img-circle.img-responsive{alt: "", src: "http://placehold.it/80"}/
+            .col-xs-10.col-md-11
+              %div
+                = link_to report.title, report
+                .mic-info
+                  = "By: #{report.user.email } on #{ report.date }"
+              .comment-text
+                Awesome design
+              .action
+                %button.btn.btn-danger.btn-xs.btn-circle.btn-lg{title: "Love", type: "button"}
+                  %span.glyphicon.glyphicon-heart
