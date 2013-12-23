@@ -10,7 +10,7 @@
         %li.list-group-item
           .row
             .col-xs-2.col-md-1
-              %img.img-circle.img-responsive{alt: "", src: "http://placehold.it/80"}/
+              = image_tag avatar_url(report.user, {size: 80}), class: 'img-circle'
             .col-xs-10.col-md-11
               %div
                 = link_to report.title, report
