@@ -1,7 +1,9 @@
 body {
-  min-height: 2000px;
-  padding-top: 70px;
+  position: relative;
+  padding-top: 50px;
 }
+
+.upload-picture { position: relative; }
 
 .widget .panel-body { padding:0px; }
 .widget .list-group { margin-bottom: 0; }

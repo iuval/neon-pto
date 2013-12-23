@@ -1,10 +1,11 @@
 NeonPto::Application.routes.draw do
   resources :reports, only: [:index, :show, :new, :create]
+  resources :pictures, only: [:index, :show, :new, :create]
 
   devise_for :users,
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  root to: 'application#index'
+  root to: 'reports#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

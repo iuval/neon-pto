@@ -1,0 +1,7 @@
+.upload-picture
+  = form_for @picture do |f|
+    .form-group
+      = f.label :file
+      = f.file_field :file, title: 'Search for a file to add'
+    .actions
+      = f.submit 'Upload'

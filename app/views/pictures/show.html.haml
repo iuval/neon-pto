@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  = image_tag @picture.file
+%p
+  %b Uploaded on:
+  = @picture.created_at
+
+= link_to 'Back', reports_path
