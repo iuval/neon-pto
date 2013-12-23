@@ -1,19 +1,17 @@
 %h1= "List of reports from #{ Date.today.strftime("%B") }"
 %p.lead Read, rate, enjoy!
 
-.container
-  .row
-    - @reports.each do |report|
-      %ul.list-group
-        %li.list-group-item
-          .row
-            .col-xs-2.col-md-1
-              = image_tag avatar_url(report.user, {size: 80}), class: 'img-circle'
-            .col-xs-10.col-md-11
-              %div
-                = link_to report.title, report, class: 'h1'
-                .mic-info
-                  = "By: #{report.user.email } on #{ report.date }"
-              .action
-                %button.btn.btn-danger.btn-xs{title: "Love", type: "button"}
-                  %span.glyphicon.glyphicon-heart
+- @reports.each do |report|
+  %ul.list-group
+    %li.list-group-item
+      .row
+        .col-xs-2.col-md-1
+          = image_tag avatar_url(report.user, {size: 80}), class: 'img-circle'
+        .col-xs-10.col-md-11
+          %div
+            = link_to report.title, report, class: 'h1'
+            .mic-info
+              = "By: #{report.user.email } on #{ report.date }"
+          .action
+            %button.btn.btn-danger.btn-xs{title: "Love", type: "button"}
+              %span.glyphicon.glyphicon-heart

@@ -8,10 +8,11 @@
 
   .form-group
     = f.label :title
-    = f.text_field :title, class: 'form-control'
+    = f.text_field :title, class: 'form-control', placeholder: 'How was your day?'
   .form-group
     = f.label :body
-    = f.text_area :body, class: 'form-control'
+    = f.text_area :body, class: 'form-control counted', placeholder: 'Type in your adventure!', rows: 10
+    %h6.pull-right{ id: 'counter'}270 characters remaining
   .form-group
     = f.label :date
     = f.date_select :date, value: Date.today.strftime('%m-%d-%Y')
