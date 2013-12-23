@@ -1,8 +1,6 @@
 %h1= "List of reports from #{ Date.today.strftime("%B") }"
 %p.lead Read, rate, enjoy!
 
-= link_to 'New Report', new_report_path
-
 .container
   .row
     - @reports.each do |report|
@@ -13,11 +11,9 @@
               = image_tag avatar_url(report.user, {size: 80}), class: 'img-circle'
             .col-xs-10.col-md-11
               %div
-                = link_to report.title, report
+                = link_to report.title, report, class: 'h1'
                 .mic-info
                   = "By: #{report.user.email } on #{ report.date }"
-              .comment-text
-                Awesome design
               .action
-                %button.btn.btn-danger.btn-xs.btn-circle.btn-lg{title: "Love", type: "button"}
+                %button.btn.btn-danger.btn-xs{title: "Love", type: "button"}
                   %span.glyphicon.glyphicon-heart
