@@ -1,6 +1,7 @@
 $(function() {
   bindLiveLinks();
-  $(".counted").charCounter(270,{container: "#counter"});
+
+  $(".counted").charCounter(parseInt($("#counter").data('default')),{container: "#counter"});
 });
 
 function bindLiveLinks() {
@@ -27,7 +28,7 @@ function bindLiveLinks() {
         }
         if(data.status == 'ok'){
           $that.toggleClass('btn-danger');
-          $.jGrowl(data.message, { theme: 'warning' });
+          $.jGrowl(data.message, { theme: 'success' });
         } else {
           $.jGrowl(data.message, { theme: 'alert' });
         }
