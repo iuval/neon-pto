@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_report, only: [:show, :edit, :update, :destroy, :love]
+  before_action :set_report, only: [:show, :edit, :update, :destroy]
 
   def index
     @reports = Report.all
@@ -38,9 +38,20 @@ class ReportsController < ApplicationController
     end
   end
 
-  def love
-    if current_user.this_month_love_count <= NeonPto.config.max_love_per_month
-      debugger
+  def toggle_love
+    report = Report.find(params[:id])
+    if report
+      love = current_user.user_love_reports.where(report_id: report).first
+      if love
+        current_user.user_love_reports.delete love
+      else
+        if current_user.this_month_love_count <= UserLoveReport.max_love_per_month
+          current_user.user_love_reports.create(report: report)
+        end
+      end
+      render json: { status: :ok }
+    else
+      render json: { status: :error, message: 'Report does not exists.' }
     end
   end
 

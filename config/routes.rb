@@ -1,7 +1,7 @@
 NeonPto::Application.routes.draw do
   resources :reports, only: [:index, :show, :new, :create] do
     member do
-      post :love
+      post :toggle_love
     end
   end
   resources :pictures, only: [:index, :show, :new, :create]
