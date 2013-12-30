@@ -11,9 +11,11 @@ class ReportsController < ApplicationController
 
   def new
     @report = Report.new
+    @pictures = current_user.pictures.where('extract(month from created_at) = ?', Date.today.month)
   end
 
   def create
+    debugger
     @report = Report.new(report_params)
     @report.user = current_user
 
@@ -40,6 +42,6 @@ class ReportsController < ApplicationController
     # Never trust parameters from the scary internet,
     # only allow the white list through.
     def report_params
-      params.require(:report).permit(:user_id, :body, :title, :date)
+      params.require(:report).permit(:user_id, :body, :title, :date, :picture_ids)
     end
 end

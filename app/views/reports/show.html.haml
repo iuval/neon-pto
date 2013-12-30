@@ -1,16 +1,14 @@
 %p#notice= notice
 
 %p
-  %b User:
-  = @report.user
-%p
-  %b Body:
-  = @report.body
-%p
   %b Title:
   = @report.title
 %p
-  %b Date:
-  = @report.date
+  ="By: #{ @report.user.email } on #{ @report.date }"
+%p
+  = @report.body
+%p
+  - @report.pictures.each do |p|
+    =image_tag p.file
 
 = link_to 'Back', reports_path
