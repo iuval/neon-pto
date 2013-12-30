@@ -15,9 +15,14 @@ class ReportsController < ApplicationController
   end
 
   def create
-    debugger
     @report = Report.new(report_params)
     @report.user = current_user
+    params[:report][:picture_ids].each do |picture_id|
+      picture = current_user.pictures.where(id: picture_id).first
+      if picture
+        @report.pictures << picture
+      end
+    end
 
     respond_to do |format|
       if @report.save
