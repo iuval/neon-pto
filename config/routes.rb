@@ -1,10 +1,11 @@
 NeonPto::Application.routes.draw do
-  resources :reports, only: [:index, :show, :new, :create] do
+  resources :reports, only: [:index, :show, :update, :new, :create] do
     member do
       post :toggle_love
     end
     collection do
       get :result
+      get :edit
     end
   end
   resources :pictures, only: [:index, :show, :new, :create]

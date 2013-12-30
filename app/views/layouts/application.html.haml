@@ -30,7 +30,10 @@
             %li
               = link_to 'Reports poll', result_reports_path
             %li
-              = link_to 'Write a report!', new_report_path, class: 'h4'
+              - if current_user.has_this_month_report?
+                = link_to 'Want to change your report?', edit_reports_path, class: 'h4'
+              - else
+                = link_to 'Write a report!', new_report_path, class: 'h4'
             %li
               = link_to 'Upload a picture', new_picture_path
             %li
