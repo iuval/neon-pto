@@ -1,8 +1,19 @@
 $(function() {
   bindLiveLinks();
 
+  showLoveBars();
+
   $(".counted").charCounter(parseInt($("#counter").data('default')),{container: "#counter"});
 });
+
+function showLoveBars() {
+  var scale = 100 / parseInt($('.rated_reports').data('total-love'))
+  $(".love_bar").each(function(index, v) {
+    $(v).progressbar({
+      value: parseInt($(v).data('love')) * scale
+    });
+  });
+}
 
 function bindLiveLinks() {
   $('.reports a.love').click(function(e) {
