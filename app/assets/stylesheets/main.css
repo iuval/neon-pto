@@ -3,7 +3,9 @@ body {
   padding-top: 50px;
 }
 
-.upload-picture { position: relative; }
+.upload-picture {
+  position: relative;
+}
 
 .widget .panel-body { padding:0px; }
 .widget .list-group { margin-bottom: 0; }

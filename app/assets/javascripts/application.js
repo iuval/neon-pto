@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.charcounter
+//= require vendor/jquery.jgrowl.min
 //= require_tree .

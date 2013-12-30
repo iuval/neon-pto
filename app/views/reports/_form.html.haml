@@ -18,11 +18,13 @@
     = f.date_select :date, value: Date.today.strftime('%m-%d-%Y')
   .row
     .form-group
-      = f.label :picture_ids
-      -  @pictures.each do |p|
-        .col-xs-12.col-md-6
-          %input{ type: :checkbox, name: 'report[picture_ids][]', value: p.id }
-          .thumbnail
-            = image_tag p.file, { data: { src: 'holder.js/100%x180' } }
+      = f.label :pictures
+      .btn-group{"data-toggle" => "buttons"}
+        -  @pictures.each do |p|
+          .col-xs-12.col-md-6
+            %label.btn.btn-default
+              %input{ type: :checkbox, name: 'report[picture_ids][]', value: p.id }
+              .thumbnail
+                = image_tag p.file, { data: { src: 'holder.js/100%x180' } }
   .actions
     = f.submit 'Save'

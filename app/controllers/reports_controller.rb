@@ -42,14 +42,25 @@ class ReportsController < ApplicationController
     report = Report.find(params[:id])
     if report
       love = current_user.user_love_reports.where(report_id: report).first
+      love_count = current_user.this_month_love_count
       if love
         current_user.user_love_reports.delete love
+        love_count -= 1
       else
-        if current_user.this_month_love_count <= UserLoveReport.max_love_per_month
+        if love_count < UserLoveReport.max_love_per_month
           current_user.user_love_reports.create(report: report)
+          love_count += 1
+        else
+          render json: {
+            status: :error,
+            message: "You already loved #{UserLoveReport.max_love_per_month} reports this month."
+          } and return
         end
       end
-      render json: { status: :ok }
+      render json: {
+        status: :ok,
+        message: "#{love_count} out of #{UserLoveReport.max_love_per_month} loves this month."
+      }
     else
       render json: { status: :error, message: 'Report does not exists.' }
     end

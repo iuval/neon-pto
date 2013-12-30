@@ -1,6 +1,6 @@
 $(function() {
   bindLiveLinks();
-//  $(".counted").charCounter(270,{container: "#counter"});
+  $(".counted").charCounter(270,{container: "#counter"});
 });
 
 function bindLiveLinks() {
@@ -22,14 +22,20 @@ function bindLiveLinks() {
       dataType: 'json',
       success: function(data, textstatus, xhrreq){
         if (xhrreq.getAllResponseHeaders().match(/Content-Type: text\/html/)){
+          $.jGrowl("You need to login first. Reload the page.", { theme: 'alert' });
           return;
         }
-
-        $that.toggleClass('btn-danger');
+        if(data.status == 'ok'){
+          $that.toggleClass('btn-danger');
+          $.jGrowl(data.message, { theme: 'warning' });
+        } else {
+          $.jGrowl(data.message, { theme: 'alert' });
+        }
         $that.removeClass("waiting");
       },
       fail: function(xhr) {
         $that.removeClass("waiting");
+        $.jGrowl("Somthing went wrong", { theme: 'alert' });
       },
     })
   });
