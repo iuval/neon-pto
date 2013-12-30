@@ -22,5 +22,7 @@ module NeonPto
     config.assets.initialize_on_precompile = false
 
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+
+    config.max_love_per_month = ENV['max_love_per_month']
   end
 end

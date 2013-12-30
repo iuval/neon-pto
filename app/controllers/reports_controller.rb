@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_report, only: [:show, :edit, :update, :destroy]
+  before_action :set_report, only: [:show, :edit, :update, :destroy, :love]
 
   def index
     @reports = Report.all
@@ -35,6 +35,12 @@ class ReportsController < ApplicationController
         format.json { render json: @report.errors,
           status: :unprocessable_entity }
       end
+    end
+  end
+
+  def love
+    if current_user.this_month_love_count <= NeonPto.config.max_love_per_month
+      debugger
     end
   end
 
