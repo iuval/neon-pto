@@ -3,6 +3,9 @@ NeonPto::Application.routes.draw do
     member do
       post :toggle_love
     end
+    collection do
+      get :result
+    end
   end
   resources :pictures, only: [:index, :show, :new, :create]
 

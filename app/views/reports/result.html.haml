@@ -1,0 +1,15 @@
+%h1= "Last month results"
+- if @reports.length > 0
+  .rated_reports{ data: { total_love: @total_love }}
+    - @rated_reports.each do |rated_report|
+      %ul
+        %li
+          = image_tag avatar_url(rated_report[:report].user, {size: 40}), class: 'img-circle'
+          = rated_report[:report].user.email
+          - value = rated_report[:love] * @scale
+          .progress
+            .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{value}", role: "progressbar", style: "width: #{value}%;"}
+              %span= "#{value}%"
+- else
+  No reports from last month..
+
