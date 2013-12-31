@@ -14,6 +14,8 @@ NeonPto::Application.routes.draw do
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   devise_scope :user do
     get :signin, to: 'application#index', as: :new_user_session
+    get :signup, to: 'application#index', as: :new_user_registration
+    get :signout, to: 'devise/sessions#destroy', as: :signout
   end
 
   root to: 'reports#index'

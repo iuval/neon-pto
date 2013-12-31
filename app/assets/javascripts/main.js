@@ -1,10 +1,21 @@
 $(function() {
   bindLiveLinks();
-
   showLoveBars();
-
-  $(".counted").charCounter(parseInt($("#counter").data('default')),{container: "#counter"});
+  bindCharCounter();
 });
+
+function showFlashs() {
+  $(".alert").alert();
+}
+
+function alert(type, message) {
+  $('#messages').html("<div class='alert alert-" + type + "'><a class='close' data-dismiss='alert'>×</a><span>" + message + "</span></div>");
+}
+
+
+function bindCharCounter() {
+  $(".counted").charCounter(parseInt($("#counter").data('default')),{container: "#counter"});
+}
 
 function showLoveBars() {
   var scale = 100 / parseInt($('.rated_reports').data('total-love'))
@@ -34,20 +45,20 @@ function bindLiveLinks() {
       dataType: 'json',
       success: function(data, textstatus, xhrreq){
         if (xhrreq.getAllResponseHeaders().match(/Content-Type: text\/html/)){
-          $.jGrowl("You need to login first. Reload the page.", { theme: 'alert' });
+          alert('error', "You need to login first. Reload the page.");
           return;
         }
         if(data.status == 'ok'){
           $that.toggleClass('btn-danger');
-          $.jGrowl(data.message, { theme: 'success' });
+          alert('success', data.message);
         } else {
-          $.jGrowl(data.message, { theme: 'alert' });
+          alert('warning', data.message);
         }
         $that.removeClass("waiting");
       },
       fail: function(xhr) {
         $that.removeClass("waiting");
-        $.jGrowl("Somthing went wrong", { theme: 'alert' });
+        alert('danger', "Somthing went wrong");
       },
     })
   });

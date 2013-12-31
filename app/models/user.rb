@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
+  validates :email, presence: true, email: true
+
   has_many :pictures
   has_many :reports
   has_many :user_love_reports
