@@ -27,9 +27,7 @@
         .collapse.navbar-collapse
           %ul.nav.navbar-nav.navbar-right
             %li
-              = link_to 'All reports', reports_path
-            %li
-              = link_to 'Reports poll', result_reports_path
+              = link_to 'Reports', reports_path
             %li
               - if current_user.has_this_month_report?
                 = link_to 'Want to change your report?', edit_reports_path

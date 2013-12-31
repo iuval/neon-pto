@@ -2,7 +2,18 @@ $(function() {
   bindLiveLinks();
   showLoveBars();
   bindCharCounter();
+  bindMonthSelector();
 });
+
+function bindMonthSelector() {
+  var picker = $("#datepicker").datepicker({
+    format: "mm-yyyy",
+    viewMode: "months",
+    minViewMode: "months"
+  }).on('changeDate', function(ev) {
+    window.location = picker.data('on-change-url') + (ev.date.getMonth()+1) + "-" + ev.date.getFullYear();
+  });
+}
 
 function showFlashs() {
   $(".alert").alert();
@@ -49,7 +60,15 @@ function bindLiveLinks() {
           return;
         }
         if(data.status == 'ok'){
-          $that.toggleClass('btn-danger');
+          var love_span = $that.children('.love'),
+              love = parseInt(love_span .text());
+          if ($that.hasClass('btn-danger')) {
+            love_span.text(love - 1);
+            $that.removeClass('btn-danger');
+          } else {
+            love_span.text(love + 1);
+            $that.addClass('btn-danger');
+          }
           alert('success', data.message);
         } else {
           alert('warning', data.message);

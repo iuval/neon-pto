@@ -4,7 +4,6 @@ NeonPto::Application.routes.draw do
       post :toggle_love
     end
     collection do
-      get :result
       get :edit
     end
   end
@@ -18,6 +17,7 @@ NeonPto::Application.routes.draw do
     get :signout, to: 'devise/sessions#destroy', as: :signout
   end
 
+  get '/:date', to: 'reports#index'
   root to: 'reports#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

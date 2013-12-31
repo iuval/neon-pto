@@ -3,20 +3,11 @@ class ReportsController < ApplicationController
   before_action :set_report, only: [:show, :update, :destroy]
 
   def index
-    @reports = Report.where('extract(month from created_at) = ?', Date.today.month)
-  end
-
-  def result
-    @reports = Report.where('extract(month from created_at) = ?', 1.month.ago.month)
-    if @reports.length > 0
-      @total_love = 0
-      @rated_reports = []
-      @reports.each do |r|
-        @rated_reports << { report: r, love: r.love }
-        @total_love += r.love
-      end
-      @rated_reports.sort_by{ |r| r[:love] }
-      @scale = 100 / @total_love
+    @date = params[:date] || Date.today.strftime("%m-%Y")
+    split = @date.split '-'
+    if split.length == 2
+      @reports = Report.where('extract(month from created_at) = ?', split[0])
+                       .where('extract(year from created_at) = ?', split[1])
     end
   end
 
@@ -106,7 +97,7 @@ class ReportsController < ApplicationController
       end
       render json: {
         status: :ok,
-        message: "#{love_count} out of #{UserLoveReport.max_love_per_month} loves this month."
+        message: "#{love_count} out of #{UserLoveReport.max_love_per_month} loves this month.",
       }
     else
       render json: { status: :error, message: 'Report does not exists.' }
