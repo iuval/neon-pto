@@ -25,12 +25,12 @@ class ReportsController < ApplicationController
 
   def edit
     @report = current_user.this_month_report
-    @pictures = current_user.pictures.where('extract(month from created_at) = ?', Date.today.month)
+    @pictures = current_user.pictures_without_report
   end
 
   def new
     @report = Report.new
-    @pictures = current_user.pictures.where('extract(month from created_at) = ?', Date.today.month)
+    @pictures = current_user.pictures_without_report
   end
 
   def create
@@ -63,6 +63,7 @@ class ReportsController < ApplicationController
 
   def update
     @report.update_attributes(report_params)
+    @report.pictures.clear
     params[:report][:picture_ids].each do |picture_id|
       picture = current_user.pictures.where(id: picture_id).first
       if picture

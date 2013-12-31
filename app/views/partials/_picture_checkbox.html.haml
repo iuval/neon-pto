@@ -1,0 +1,5 @@
+.col-xs-12.col-md-6
+  %label.btn.btn-default{ class: checked ? 'active' : nil}
+    =check_box_tag 'report[picture_ids][]', picture.id, checked
+    .thumbnail
+      = image_tag picture.file, { data: { src: 'holder.js/100%x180' } }
