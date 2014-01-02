@@ -1,9 +1,17 @@
-$(document).on('page:load',function() {
+$(function () {
+  load();
+});
+
+$(document).on('page:load',function () {
+  load();
+});
+
+function load() {
   bindLiveLinks();
   showLoveBars();
   bindCharCounter();
   bindMonthSelector();
-});
+}
 
 function bindMonthSelector() {
   var picker = $("#datepicker").datepicker({
