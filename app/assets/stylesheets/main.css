@@ -11,6 +11,12 @@ body {
   background-color: #d43f3a;
 }
 
+.report-body {
+  font-size: 1.4em;
+  line-height: 1.4em;
+  margin-bottom: 1.6em;
+}
+
 .widget .panel-body { padding:0px; }
 .widget .list-group { margin-bottom: 0; }
 .widget .panel-title { display:inline }
