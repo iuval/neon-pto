@@ -4,7 +4,11 @@ class ReportsController < ApplicationController
 
   def index
     today_month = Date.today.strftime("%m-%Y")
-    @date = DateTime.strptime(params[:date], '%m-%Y').strftime("%m-%Y") || today_month
+    if params[:date]
+      @date = DateTime.strptime(params[:date], '%m-%Y').strftime("%m-%Y")
+    else
+      @date = today_month
+    end
     @is_current_month = @date == today_month
     split = @date.split '-'
     if split.length == 2
@@ -32,10 +36,12 @@ class ReportsController < ApplicationController
     else
       @report = Report.new(report_params)
       @report.user = current_user
-      params[:report][:picture_ids].each do |picture_id|
-        picture = current_user.pictures.where(id: picture_id).first
-        if picture
-          @report.pictures << picture
+      if params[:report][:picture_ids]
+        params[:report][:picture_ids].each do |picture_id|
+          picture = current_user.pictures.where(id: picture_id).first
+          if picture
+            @report.pictures << picture
+          end
         end
       end
 
@@ -57,10 +63,12 @@ class ReportsController < ApplicationController
   def update
     @report.update_attributes(report_params)
     @report.pictures.clear
-    params[:report][:picture_ids].each do |picture_id|
-      picture = current_user.pictures.where(id: picture_id).first
-      if picture
-        @report.pictures << picture
+    if params[:report][:picture_ids]
+      params[:report][:picture_ids].each do |picture_id|
+        picture = current_user.pictures.where(id: picture_id).first
+        if picture
+          @report.pictures << picture
+        end
       end
     end
 

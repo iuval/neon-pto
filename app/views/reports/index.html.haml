@@ -17,7 +17,11 @@
               %div
                 = link_to report.title, report, class: 'h1'
                 .mic-info
-                  = "By: #{report.user.email } on #{ report.date }"
+                  = "By: #{report.user.email }"
+                  %br
+                  = "on #{ report.date }"
+                  %br
+                  = "with #{report.pictures.count } pictures"
               .action
                 - if @is_current_month
                   %a.btn.btn-xs.love{title: 'Love', hrref: '#', class: current_user.user_love_reports.where(report_id: report.id).first ? 'btn-danger' : 'btn-default', data: { url: toggle_love_report_path(report) }}
