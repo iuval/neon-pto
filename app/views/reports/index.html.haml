@@ -1,7 +1,7 @@
 .form-group.row
   .col-xs-8
     %label.control-label.h1= 'Reports from'
-    #datepicker.input-group.date{"data-date" => @date, "data-date-format" => "mm-yyyy", data: { on_change_url: root_path }}
+    #datepicker.input-group.date{"data-date" => @date, "data-date-format" => "mm-yyyy", data: { on_change_url: reports_path }}
       %input.form-control{readonly: "readonly", type: "text", value: @date}/
       %span.input-group-addon.add-on
         %i.glyphicon.glyphicon-calendar

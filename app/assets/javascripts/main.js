@@ -11,7 +11,7 @@ function bindMonthSelector() {
     viewMode: "months",
     minViewMode: "months"
   }).on('changeDate', function(ev) {
-    window.location = picker.data('on-change-url') + (ev.date.getMonth()+1) + "-" + ev.date.getFullYear();
+    window.location = picker.data('on-change-url') + '?date=' + (ev.date.getMonth()+1) + "-" + ev.date.getFullYear();
   });
 }
 
