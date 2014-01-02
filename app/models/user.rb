@@ -1,11 +1,16 @@
 class User < ActiveRecord::Base
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
-  validates :email, presence: true, email: true
-
   has_many :pictures
   has_many :reports
   has_many :user_love_reports
+  validate :email_is_neonroots
+
+  def email_is_neonroots
+    unless !!(email =~ /^.+@#{ENV['neonroots_host']}/)
+      errors[:email] << I18n.t('auth.non_neonroots')
+    end
+  end
 
   def this_month_love_count
     user_love_reports.where('extract(month from created_at) = ?', Date.today.month).count
