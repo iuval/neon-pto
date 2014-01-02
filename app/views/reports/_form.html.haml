@@ -23,7 +23,10 @@
       .btn-group{"data-toggle" => "buttons"}
         - @report.pictures.each do |p|
           =render 'partials/picture_checkbox', { picture: p, checked: true }
-        - @pictures.each do |p|
-          =render 'partials/picture_checkbox', { picture: p, checked: false }
+        - if @pictures.empty?
+          No pictures from this month.
+        - else
+          - @pictures.each do |p|
+            =render 'partials/picture_checkbox', { picture: p, checked: false }
   .actions
     = f.submit 'Save'

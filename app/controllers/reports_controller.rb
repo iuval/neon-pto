@@ -18,6 +18,7 @@ class ReportsController < ApplicationController
   end
 
   def show
+    @is_current_month =  @report.date.strftime("%m-%Y") == Date.today.strftime("%m-%Y")
   end
 
   def edit

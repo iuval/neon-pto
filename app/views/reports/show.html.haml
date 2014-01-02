@@ -1,14 +1,22 @@
-%p#notice= notice
-
-%p
-  %b Title:
-  = @report.title
-%p
-  ="By: #{ @report.user.email } on #{ @report.date }"
-%p
-  = @report.body
-%p
-  - @report.pictures.each do |p|
-    =image_tag p.file
+.row
+  .col-xs-2.col-md-2
+    = image_tag avatar_url(@report.user, {size: 80}), class: 'img-circle'
+  .col-xs-10.col-md-10
+    .report
+      = link_to @report.title, @report, class: 'h1'
+      .mic-info
+        = "By: #{@report.user.email}"
+        %br
+        = "on #{@report.date}"
+        %br
+        = "with #{@report.pictures.count } pictures"
+      .action
+        =render partial: 'partials/love_report_button', locals: { report: @report, is_current_month: @is_current_month }
+.row
+  .col-xs-12.col-md-12
+    = @report.body
+    %p
+      - @report.pictures.each do |p|
+        =image_tag p.file
 
 = link_to 'Back', reports_path
