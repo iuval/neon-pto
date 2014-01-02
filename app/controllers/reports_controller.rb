@@ -3,11 +3,13 @@ class ReportsController < ApplicationController
   before_action :set_report, only: [:show, :update, :destroy]
 
   def index
-    @date = params[:date] || Date.today.strftime("%m-%Y")
+    today_month = Date.today.strftime("%m-%Y")
+    @date = DateTime.strptime(params[:date], '%m-%Y').strftime("%m-%Y") || today_month
+    @is_current_month = @date == today_month
     split = @date.split '-'
     if split.length == 2
-      @reports = Report.where('extract(month from created_at) = ?', split[0])
-                       .where('extract(year from created_at) = ?', split[1])
+      @reports = Report.where('extract(month from date) = ?', split[0])
+                       .where('extract(year from date) = ?', split[1])
     end
   end
 
@@ -79,26 +81,30 @@ class ReportsController < ApplicationController
   def toggle_love
     report = Report.find(params[:id])
     if report
-      love = current_user.user_love_reports.where(report_id: report).first
-      love_count = current_user.this_month_love_count
-      if love
-        love.destroy
-        love_count -= 1
-      else
-        if love_count < UserLoveReport.max_love_per_month
-          current_user.user_love_reports.create(report: report)
-          love_count += 1
+      if report.date.strftime("%m-%Y") == Date.today.strftime("%m-%Y")
+        love = current_user.user_love_reports.where(report_id: report).first
+        love_count = current_user.this_month_love_count
+        if love
+          love.destroy
+          love_count -= 1
         else
-          render json: {
-            status: :error,
-            message: "You already loved #{UserLoveReport.max_love_per_month} reports this month."
-          } and return
+          if love_count < UserLoveReport.max_love_per_month
+            current_user.user_love_reports.create(report: report)
+            love_count += 1
+          else
+            render json: {
+              status: :error,
+              message: "You already loved #{UserLoveReport.max_love_per_month} reports this month."
+            } and return
+          end
         end
+        render json: {
+          status: :ok,
+          message: "#{love_count} out of #{UserLoveReport.max_love_per_month} loves this month.",
+        }
+      else
+        render json: { status: :error, message: 'You cannot love an old report.' }
       end
-      render json: {
-        status: :ok,
-        message: "#{love_count} out of #{UserLoveReport.max_love_per_month} loves this month.",
-      }
     else
       render json: { status: :error, message: 'Report does not exists.' }
     end

@@ -19,8 +19,13 @@
                 .mic-info
                   = "By: #{report.user.email } on #{ report.date }"
               .action
-                %a.btn.btn-xs.love{title: 'Love', hrref: '#', class: current_user.user_love_reports.where(report_id: report.id).first ? 'btn-danger' : 'btn-default', data: { url: toggle_love_report_path(report) }}
-                  %span.glyphicon.glyphicon-heart
-                  %span.love= report.love
+                - if @is_current_month
+                  %a.btn.btn-xs.love{title: 'Love', hrref: '#', class: current_user.user_love_reports.where(report_id: report.id).first ? 'btn-danger' : 'btn-default', data: { url: toggle_love_report_path(report) }}
+                    %span.glyphicon.glyphicon-heart
+                    %span.love= report.love
+                - else
+                  %span.badge{title: 'Love', class: current_user.user_love_reports.where(report_id: report.id).first ? 'badge-danger' : 'badge-default' }
+                    %span.glyphicon.glyphicon-heart
+                    %span.love= report.love
   - else
     No reports

@@ -1,10 +1,14 @@
 body {
   position: relative;
-  padding-top: 50px;
+  padding-top: 70px;
 }
 
 .upload-picture {
   position: relative;
+}
+
+.badge-danger {
+  background-color: #d43f3a;
 }
 
 .widget .panel-body { padding:0px; }
