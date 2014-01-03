@@ -10,11 +10,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       session['devise.google_data'] = request.env['omniauth.auth']
       flash[:notice] = I18n.t 'auth.non_neonroots'
-      redirect_to root_path
+      redirect_to reports_path
     end
   end
 
   def after_sign_in_path_for(r)
-    root_path
+    reports_path
   end
 end

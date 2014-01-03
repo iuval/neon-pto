@@ -11,12 +11,7 @@ NeonPto::Application.routes.draw do
 
   devise_for :users,
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-  devise_scope :user do
-    get :signin, to: 'application#index', as: :new_user_session
-    get :signup, to: 'application#index', as: :new_user_registration
-    get :signout, to: 'devise/sessions#destroy', as: :signout
-  end
-
+ 
   root to: 'reports#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

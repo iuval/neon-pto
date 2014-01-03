@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
-  devise :omniauthable, omniauth_providers: [:google_oauth2]
+  devise :database_authenticatable, :registerable,
+    :omniauthable, omniauth_providers: [:google_oauth2]
+
+  validates :email, presence: true, uniqueness: true
 
   has_many :pictures
   has_many :reports
