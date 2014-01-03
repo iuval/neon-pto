@@ -3,7 +3,7 @@ class PicturesController < ApplicationController
   before_action :set_picture, only: [:show, :edit, :update, :destroy]
 
   def index
-    @pictures = current_user.pictures.all
+    @pictures = current_user.pictures.where(report_id: nil)
   end
 
   def show
@@ -19,7 +19,7 @@ class PicturesController < ApplicationController
 
     respond_to do |format|
       if @picture.save
-        format.html { redirect_to @picture,
+        format.html { redirect_to pictures_path,
           notice: 'Picture was successfully created.' }
         format.json { render :show,
           status: :created, location: @picture }
@@ -32,7 +32,8 @@ class PicturesController < ApplicationController
   end
 
   def destroy
-
+    @picture.destroy
+    redirect_to pictures_path
   end
 
   private

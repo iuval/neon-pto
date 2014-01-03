@@ -1,0 +1,16 @@
+= link_to 'Upload a picture', new_picture_path, class: 'btn btn-info btn-large'
+%hr
+.list-group.pictures
+  - if @pictures && @pictures.count > 0
+    - @pictures.each do |picture|
+      .list-group-item.picture
+        .thumbnail
+          =image_tag picture.file
+        .info
+          = "Uploaded on #{picture.created_at}"
+        .actions
+          = form_tag(picture_path(picture), method: 'delete') do
+            = button_tag(type: 'submit', class: 'btn btn-xs btn-danger') do
+              %span.glyphicon.glyphicon-trash
+  - else
+    No pictures

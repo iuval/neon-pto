@@ -23,13 +23,15 @@
                 = link_to 'Reports', reports_path
               %li
                 - if current_user.has_this_month_report?
-                  = link_to 'Want to change your report?', edit_reports_path
+                  = link_to 'Edit this month report', edit_reports_path
                 - else
                   = link_to 'Write a report!', new_report_path
               %li
-                = link_to 'Upload a picture', new_picture_path
+                = link_to 'Pictures', pictures_path
               %li
                 %a{href: "#about"} About
+              %li
+                = link_to('Logout', destroy_user_session_path)
           / /.nav-collapse
           .navbar-right
             = image_tag avatar_url(current_user)
@@ -39,8 +41,6 @@
               %span.icon-bar
               %span.icon-bar
               %span.icon-bar
-            \|
-            = link_to('Logout', destroy_user_session_path)
     .container
       .row
         #messages

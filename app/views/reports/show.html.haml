@@ -3,8 +3,6 @@
   .col-xs-12.col-md-12
     .report-body
       = @report.body
-    %p
       - @report.pictures.each do |p|
-        =image_tag p.file
-
-= link_to 'Back', reports_path
+        .thumbnail
+          =image_tag p.file
