@@ -5,6 +5,7 @@ class Report < ActiveRecord::Base
   has_many :pictures
   has_many :user_love_reports
 
+  validates :user, presence: :true
   validates :title, presence: :true
   validates :body, presence: true, length: { maximum: @@max_chars }
   validates :date, presence: true
