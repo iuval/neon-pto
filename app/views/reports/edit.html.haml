@@ -1,5 +1,5 @@
-%h1 Editing report
+%h1
+  %span= "Editing report"
+  = link_to 'View', @report, class: 'btn btn-info btn-large pull-right'
 
 = render 'form', report: @report, pictures: @pictures
-
-= link_to 'Show', @report

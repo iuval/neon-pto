@@ -1,4 +1,6 @@
 =render partial: 'partials/report_summary', locals: { report: @report, is_current_month: @is_current_month }
+-if @report.user == current_user
+  = link_to 'Edit', edit_reports_path(@report), class: 'btn btn-info btn-large pull-right'
 .row
   .col-xs-12.col-md-12
     .report-body
