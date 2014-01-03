@@ -17,16 +17,8 @@
       / Fixed navbar
       %nav.navbar.navbar-default.navbar-fixed-top{role: "navigation"}
         .container
-          .navbar-header
-            = image_tag avatar_url(current_user)
-            =current_user.email
-            %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", type: "button"}
-              %span.sr-only Toggle navigation
-              %span.icon-bar
-              %span.icon-bar
-              %span.icon-bar
-          .collapse.navbar-collapse
-            %ul.nav.navbar-nav.navbar-right
+          .collapse.navbar-collapse.navbar-left
+            %ul.nav.navbar-nav
               %li
                 = link_to 'Reports', reports_path
               %li
@@ -38,9 +30,17 @@
                 = link_to 'Upload a picture', new_picture_path
               %li
                 %a{href: "#about"} About
-              %li
-                = link_to('Logout', destroy_user_session_path, method: :delete)
           / /.nav-collapse
+          .navbar-right
+            = image_tag avatar_url(current_user)
+            =current_user.email
+            %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", type: "button"}
+              %span.sr-only Toggle navigation
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            \|
+            = link_to('Logout', destroy_user_session_path)
     .container
       .row
         #messages

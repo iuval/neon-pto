@@ -7,14 +7,14 @@ body {
   position: relative;
 }
 
-.badge-danger {
-  background-color: #d43f3a;
-}
-
 .report-body {
   font-size: 1.4em;
   line-height: 1.4em;
   margin-bottom: 1.6em;
+}
+
+.thumbnail {
+  border: 0px!important;
 }
 
 .widget .panel-body { padding:0px; }

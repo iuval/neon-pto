@@ -1,7 +1,8 @@
 .row
-  .col-xs-2.col-md-2
-    = image_tag avatar_url(report.user, {size: 80}), class: 'img-circle'
-  .col-xs-10.col-md-10
+  .col-xs-12.col-sm-3
+    .thumbnail
+      = image_tag avatar_url(report.user, {size: 80}), class: 'img-circle'
+  .col-xs-12.col-sm-9
     .report
       = link_to report.title, report, class: 'h1'
       .mic-info
@@ -16,6 +17,6 @@
             %span.glyphicon.glyphicon-heart
             %span.love= report.love
         - else
-          %span.badge{title: 'Love', class: current_user.user_love_reports.where(report_id: report.id).first ? 'badge-danger' : 'badge-default' }
+          %span.label{title: 'Love', class: current_user.user_love_reports.where(report_id: report.id).first ? 'label-danger' : 'label-default' }
             %span.glyphicon.glyphicon-heart
             %span.love= report.love
