@@ -9,6 +9,8 @@ class Report < ActiveRecord::Base
   validates :body, presence: true, length: { maximum: @@max_chars }
   validates :date, presence: true
 
+  delegate :email, to: :user, prefix: true
+
   def self.max_chars
     @@max_chars
   end

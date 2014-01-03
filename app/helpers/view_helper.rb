@@ -1,6 +1,6 @@
 module ViewHelper
   def avatar_url(user, opts = {size: 50})
-    if user.avatar_url.present?
+    if user.avatar_url?
       user.avatar_url
     else
       default_url = "#{root_url}images/guest.png"

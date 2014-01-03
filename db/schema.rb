@@ -24,6 +24,9 @@ ActiveRecord::Schema.define(version: 20131230114206) do
     t.datetime "updated_at"
   end
 
+  add_index "pictures", ["report_id"], name: "index_pictures_on_report_id", using: :btree
+  add_index "pictures", ["user_id"], name: "index_pictures_on_user_id", using: :btree
+
   create_table "reports", force: true do |t|
     t.integer  "user_id"
     t.text     "body"
@@ -41,6 +44,9 @@ ActiveRecord::Schema.define(version: 20131230114206) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "user_love_reports", ["report_id"], name: "index_user_love_reports_on_report_id", unique: true, using: :btree
+  add_index "user_love_reports", ["user_id"], name: "index_user_love_reports_on_user_id", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

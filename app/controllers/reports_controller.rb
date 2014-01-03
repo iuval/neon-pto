@@ -35,8 +35,7 @@ class ReportsController < ApplicationController
     if current_user.has_this_month_report?
       redirect_to root_path
     else
-      @report = Report.new(report_params)
-      @report.user = current_user
+      @report = current_user.reports.new(report_params)
       if params[:report][:picture_ids]
         params[:report][:picture_ids].each do |picture_id|
           picture = current_user.pictures.where(id: picture_id).first
@@ -50,10 +49,10 @@ class ReportsController < ApplicationController
         if @report.save
           format.html { redirect_to @report,
             notice: 'Report was successfully created.' }
-          format.json { render action: 'show',
+          format.json { render :show,
             status: :created, location: @report }
         else
-          format.html { render action: 'new' }
+          format.html { render :new }
           format.json { render json: @report.errors,
             status: :unprocessable_entity }
         end
@@ -63,24 +62,25 @@ class ReportsController < ApplicationController
 
   def update
     @report.update_attributes(report_params)
-    @report.pictures.clear
+    pictures = []
     if params[:report][:picture_ids]
       params[:report][:picture_ids].each do |picture_id|
         picture = current_user.pictures.where(id: picture_id).first
         if picture
-          @report.pictures << picture
+          pictures << picture
         end
       end
     end
+    @report.pictures = pictures
 
     respond_to do |format|
       if @report.save
         format.html { redirect_to @report,
           notice: 'Report was successfully updated.' }
-        format.json { render action: 'show',
+        format.json { render :show,
           status: :created, location: @report }
       else
-        format.html { render action: 'update' }
+        format.html { render :update }
         format.json { render json: @report.errors,
           status: :unprocessable_entity }
       end

@@ -6,5 +6,7 @@ class UserLoveReports < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :user_love_reports, :user_id,   unique: true
+    add_index :user_love_reports, :report_id, unique: true
   end
 end

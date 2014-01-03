@@ -1,9 +1,9 @@
-= form_for @report do |f|
-  - if @report.errors.any?
+= form_for report do |f|
+  - if report.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@report.errors.count, "error")} prohibited this report from being saved:"
+      %h2= "#{pluralize(report.errors.count, "error")} prohibited this report from being saved:"
       %ul
-        - @report.errors.full_messages.each do |msg|
+        - report.errors.full_messages.each do |msg|
           %li= msg
 
   .form-group
@@ -21,12 +21,12 @@
     .form-group
       = f.label :pictures
       .btn-group{"data-toggle" => "buttons"}
-        - @report.pictures.each do |p|
+        - report.pictures.each do |p|
           =render 'partials/picture_checkbox', { picture: p, checked: true }
-        - if @pictures.empty?
+        - if pictures.empty?
           No pictures from this month.
         - else
-          - @pictures.each do |p|
+          - pictures.each do |p|
             =render 'partials/picture_checkbox', { picture: p, checked: false }
   .actions
     = f.submit 'Save'
