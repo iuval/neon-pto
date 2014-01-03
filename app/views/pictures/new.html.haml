@@ -2,6 +2,9 @@
   = form_for @picture do |f|
     .form-group
       = f.label :file
-      = f.file_field :file, title: 'Search for a file to add'
+      = f.file_field :file, title: 'Search for a file to add', class: 'form-control'
+    .form-group
+      = f.label :description
+      = f.text_field :description, placeholder: "In few words, describe what's happening", class: 'form-control'
     .actions
       = f.submit 'Upload', class: 'btn btn-info btn-large'

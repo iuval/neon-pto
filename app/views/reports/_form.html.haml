@@ -16,17 +16,16 @@
       = "#{Report.max_chars} characters remaining"
   .form-group
     = f.label :date
-    = f.date_select :date, value: Date.today.strftime('%m-%d-%Y')
-  .row
-    .form-group
-      = f.label :pictures
-      .btn-group{"data-toggle" => "buttons"}
-        - report.pictures.each do |p|
-          =render 'partials/picture_checkbox', { picture: p, checked: true }
-        - if pictures.empty?
-          No pictures from this month.
-        - else
-          - pictures.each do |p|
-            =render 'partials/picture_checkbox', { picture: p, checked: false }
+    = f.date_select :date, value: Date.today.strftime('%m-%d-%Y'), class: 'form-control'
+  .form-group
+    = f.label :pictures
+    .btn-group{"data-toggle" => "buttons"}
+      - report.pictures.each do |p|
+        =render 'partials/picture_checkbox', { picture: p, checked: true }
+      - if pictures.empty?
+        No pictures from this month.
+      - else
+        - pictures.each do |p|
+          =render 'partials/picture_checkbox', { picture: p, checked: false }
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', class: 'btn btn-info btn-large'
