@@ -19,6 +19,11 @@ class ReportsController < ApplicationController
   end
 
   def show
+    unless @report.published
+      flash[:alert] = I18n.t('report.not_published')
+      redirect_to reports_path
+    end
+
     @is_current_month =  @report.date.strftime("%m-%Y") == Date.today.strftime("%m-%Y")
   end
 

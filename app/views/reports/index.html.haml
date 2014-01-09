@@ -1,11 +1,11 @@
-.form-group.row
-  .col-xs-8
-    %label.control-label.h1= 'Reports from'
+%h1= 'Reports from'
+.col-xs-12
+  .form-group
     #datepicker.input-group.date{"data-date" => @date, "data-date-format" => "mm-yyyy", data: { on_change_url: reports_path }}
       %input.form-control{readonly: "readonly", type: "text", value: @date}/
       %span.input-group-addon.add-on
         %i.glyphicon.glyphicon-calendar
-.reports
+.reports.col-xs-12
   - if @reports && @reports.count > 0
     - @reports.each do |report|
       %ul.list-group
