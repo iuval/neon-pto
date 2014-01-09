@@ -12,7 +12,7 @@
     = f.date_select :date, value: Date.today.strftime('%m-%d-%Y'), class: 'form-control'
   .form-group
     = f.label :pictures
-    .btn-group{"data-toggle" => "buttons"}
+    .select-pictures.btn-group{"data-toggle" => "buttons"}
       - report.pictures.each do |p|
         =render 'partials/picture_checkbox', { picture: p, checked: true }
       - unless pictures.empty?
