@@ -1,0 +1,4 @@
+%br
+- if controller_name == 'sessions'
+  = link_to "Sign up", new_user_registration_path, class: 'btn btn-lg btn-primary btn-block'
+= link_to "Sign in with Google+", omniauth_authorize_path(resource_name, :google_oauth2), class: 'btn btn-lg btn-danger btn-block'
