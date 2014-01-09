@@ -7,7 +7,7 @@ NeonPto::Application.routes.draw do
       get :edit
     end
   end
-  resources :pictures
+  resources :pictures, except: [:edit, :update]
 
   devise_for :users,
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
