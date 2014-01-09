@@ -14,4 +14,5 @@
 //= require vendor/jquery-ui.min
 //= require turbolinks
 //= require jquery.charcounter
+//= require vendor/dropupload
 //= require_tree .

@@ -1,10 +1,17 @@
 .upload-picture
   = form_for @picture do |f|
-    .form-group
+    .form-group.picture-group
       = f.label :file
-      = f.file_field :file, title: 'Search for a file to add', class: 'form-control'
+      = f.file_field :file, class: 'file', style: 'display: none;'
+      #browse-file.btn.btn-default.drop_zone.form-control.preview.thumbnail
+        %span Browse or Drag file here
+      #drag-overlay.dragleave
+        %span
+          Drop file here
+          %span.glyphicon.glyphicon-upload
+    %br
     .form-group
       = f.label :description
       = f.text_field :description, placeholder: "In few words, describe what's happening", class: 'form-control'
     .actions
-      = f.submit 'Upload', class: 'btn btn-success btn-large'
+      = link_to 'Upload', pictures_path, class: 'btn btn-success btn-large submit'

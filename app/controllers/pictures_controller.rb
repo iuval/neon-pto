@@ -21,12 +21,16 @@ class PicturesController < ApplicationController
       if @picture.save
         format.html { redirect_to pictures_path,
           notice: 'Picture was successfully created.' }
-        format.json { render :show,
-          status: :created, location: @picture }
+        format.json { render json: {
+          status: :ok,
+          message: 'Picture was successfully created.'
+        } }
       else
         format.html { render :new }
-        format.json { render json: @picture.errors,
-          status: :unprocessable_entity }
+        format.json { render json: {
+          status: :error,
+          message: @picture.errors.full_messages
+        } }
       end
     end
   end
