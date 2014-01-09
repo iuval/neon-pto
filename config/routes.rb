@@ -13,6 +13,9 @@ NeonPto::Application.routes.draw do
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   root to: 'reports#index'
+
+  get :support, to: 'supports#support', as: :support
+  post :support, to: 'supports#send_feedback', as: :send_feedback
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

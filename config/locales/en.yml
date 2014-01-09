@@ -3,3 +3,5 @@ en:
     non_neonroots: 'You have to use your NeonRoots email.'
   report:
     not_published: 'This report is not published.'
+  support:
+    email_sent: 'Email sent. Thanks!'

@@ -1,0 +1,11 @@
+.row
+  .col-mid-4
+    = form_tag send_feedback_path, method: 'post' do
+      .get-in-touch
+        %h3.text-center
+          Get in Touch
+        .form-group
+          %input#name.form-control{placeholder: 'Subjet', name: 'subject', type: 'text'}/
+        .form-group
+          %textarea.form-control{placeholder: 'Message', name: 'body', rows: '5'}
+        %input{type: 'submit', value: 'Send it!', class: 'btn btn-danger btn-sm btn-block'}
