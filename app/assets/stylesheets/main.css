@@ -3,6 +3,10 @@ body {
   padding-top: 70px;
 }
 
+a.btn:visited {
+  color: #fff;
+}
+
 .upload-picture {
   position: relative;
 }
