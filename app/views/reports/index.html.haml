@@ -2,9 +2,9 @@
 .col-xs-12
   .form-group
     #datepicker.input-group.date{"data-date" => @date, "data-date-format" => "mm-yyyy", data: { on_change_url: reports_path }}
-      %input.form-control{readonly: "readonly", type: "text", value: @date}/
       %span.input-group-addon.add-on
         %i.glyphicon.glyphicon-calendar
+      %input.form-control{readonly: "readonly", type: "text", value: @date}
 .reports.col-xs-12
   - if @reports && @reports.count > 0
     - @reports.each do |report|
