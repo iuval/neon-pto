@@ -1,4 +1,11 @@
 = form_for report do |f|
+  .btn-group{ data: { toggle: 'buttons' } }
+    %label.btn.btn-primary{ class: report.published ? 'active' : nil }
+      = f.radio_button :published, :true, checked: report.published
+      Published
+    %label.btn.btn-primary{ class: !report.published ? 'active' : nil }
+      = f.radio_button :published, :false, checked: !report.published
+      Unpublished
   .form-group
     = f.label :title
     = f.text_field :title, class: 'form-control', placeholder: 'How was your day?'

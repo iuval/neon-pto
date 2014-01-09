@@ -12,8 +12,9 @@ class ReportsController < ApplicationController
     @is_current_month = @date == today_month
     split = @date.split '-'
     if split.length == 2
-      @reports = Report.where('extract(month from date) = ?', split[0])
-                       .where('extract(year from date) = ?', split[1])
+      @reports = Report.published
+        .where('extract(month from date) = ?', split[0])
+        .where('extract(year from date) = ?', split[1])
     end
   end
 
@@ -128,6 +129,6 @@ class ReportsController < ApplicationController
     # Never trust parameters from the scary internet,
     # only allow the white list through.
     def report_params
-      params.require(:report).permit(:user_id, :body, :title, :date, :picture_ids)
+      params.require(:report).permit(:user_id, :body, :title, :date, :published, :picture_ids)
     end
 end

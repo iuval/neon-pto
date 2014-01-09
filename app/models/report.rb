@@ -12,6 +12,8 @@ class Report < ActiveRecord::Base
 
   delegate :email, to: :user, prefix: true
 
+  scope :published, -> { where(published: true) }
+
   def self.max_chars
     @@max_chars
   end
