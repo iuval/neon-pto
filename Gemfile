@@ -44,6 +44,7 @@ group :development, :test do
   gem 'spork-rails'
   gem 'thin'
   gem 'faker'
+  gem 'timecop'
 end
 
 group :production do

@@ -31,6 +31,20 @@ class User < ActiveRecord::Base
     pictures.where(report_id: nil)
   end
 
+  def toggle_love(report)
+    love = user_love_reports.where(report_id: report).first
+    love_count = this_month_love_count
+    if love
+      love.destroy
+      love_count -= 1
+    else
+      if love_count < UserLoveReport.max_love_per_month
+        user_love_reports.create(report: report)
+        love_count += 1
+      end
+    end
+  end
+
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info
     user = User.where(email: data['email']).first

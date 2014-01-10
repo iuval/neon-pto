@@ -86,7 +86,10 @@ class ReportsController < ApplicationController
         format.json { render :show,
           status: :created, location: @report }
       else
-        format.html { render :update }
+        format.html {
+          @pictures = current_user.pictures_without_report
+          render :edit
+        }
         format.json { render json: @report.errors,
           status: :unprocessable_entity }
       end
@@ -97,21 +100,12 @@ class ReportsController < ApplicationController
     report = Report.find(params[:id])
     if report
       if report.date.strftime("%m-%Y") == Date.today.strftime("%m-%Y")
-        love = current_user.user_love_reports.where(report_id: report).first
-        love_count = current_user.this_month_love_count
-        if love
-          love.destroy
-          love_count -= 1
-        else
-          if love_count < UserLoveReport.max_love_per_month
-            current_user.user_love_reports.create(report: report)
-            love_count += 1
-          else
-            render json: {
-              status: :error,
-              message: "You already loved #{UserLoveReport.max_love_per_month} reports this month."
-            } and return
-          end
+        love_count = current_user.toggle_love report
+        if love_count == UserLoveReport.max_love_per_month
+          render json: {
+            status: :error,
+            message: "You already loved #{UserLoveReport.max_love_per_month} reports this month."
+          } and return
         end
         render json: {
           status: :ok,
