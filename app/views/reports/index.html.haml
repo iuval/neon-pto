@@ -1,11 +1,10 @@
-%h1= 'Reports from'
-.col-xs-12
-  .form-group
-    #datepicker.input-group.date{"data-date" => @date, "data-date-format" => "mm-yyyy", data: { on_change_url: reports_path }}
-      %span.input-group-addon.add-on
-        %i.glyphicon.glyphicon-calendar
-      %input.form-control{readonly: "readonly", type: "text", value: @date}
-.reports.col-xs-12
+.page-header
+  .h1= 'Reports from'
+  #datepicker.date{"data-date" => @date, "data-date-format" => "mm-yyyy", data: { on_change_url: reports_path }}
+    %span.add-on.btn.btn-block.btn-default.btn-lg
+      %i.glyphicon.glyphicon-calendar
+      = @date
+.reports
   - if @reports && @reports.count > 0
     - @reports.each do |report|
       %ul.list-group
