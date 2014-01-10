@@ -61,6 +61,10 @@ a.btn:visited {
   margin-bottom: 1.6em;
 }
 
+.report {
+  word-wrap: break-word;
+}
+
 .thumbnail {
   border: 0px!important;
 }
