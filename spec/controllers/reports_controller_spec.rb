@@ -92,31 +92,33 @@ describe ReportsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested report" do
-        report = FactoryGirl.create(:report)
-        # Assuming there are no other reports in the database, this
-        # specifies that the Report created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Report.any_instance.should_receive(:update).with({ "user" => "" })
-        put :update, {id: report.to_param, report: { "user" => "" }}
+        report = FactoryGirl.create(:report, user: subject.current_user)
+        Report.any_instance.should_receive(:update).with({ "user" => nil })
+        put :update, {id: report.to_param, report: { "user" => nil }}
       end
 
       it "assigns the requested report as @report" do
-        report = FactoryGirl.create(:report)
+        report = FactoryGirl.create(:report, user: subject.current_user)
         put :update, {id: report.to_param, report: FactoryGirl.build(:report).attributes}
         assigns(:report).should eq(report)
       end
 
       it "redirects to the report" do
-        report = FactoryGirl.create(:report)
+        report = FactoryGirl.create(:report, user: subject.current_user)
         put :update, {id: report.to_param, report: FactoryGirl.build(:report).attributes}
         response.should redirect_to(report)
+      end
+
+      it "redirects to the reports if current user is not author of report" do
+        report = FactoryGirl.create(:report)
+        put :update, {id: report.to_param, report: FactoryGirl.build(:report).attributes}
+        response.should redirect_to(reports_path)
       end
     end
 
     describe "with invalid params" do
       it "assigns the report as @report" do
-        report = FactoryGirl.create(:report)
+        report = FactoryGirl.create(:report, user: subject.current_user)
         # Trigger the behavior that occurs when invalid params are submitted
         Report.any_instance.stub(:save).and_return(false)
         put :update, {id: report.to_param, report: { "user" => "invalid value" }}
@@ -124,7 +126,7 @@ describe ReportsController do
       end
 
       it "re-renders the 'edit' template" do
-        report = FactoryGirl.create(:report)
+        report = FactoryGirl.create(:report, user: subject.current_user)
         # Trigger the behavior that occurs when invalid params are submitted
         Report.any_instance.stub(:save).and_return(false)
         put :update, {id: report.to_param, report: { "user" => "invalid value" }}
