@@ -19,14 +19,13 @@ function bindPictureForm(du) {
   $('form#new_picture a.submit').click(function(e) {
     e.preventDefault();
     e.stopPropagation();
+    $(this).button('loading');
 
     var $that = $(this),
         url   = $that.attr('href'),
         data  = new FormData();
     data.append("picture[file]", du.picture());
     data.append("picture[description]", $('#picture_description').val());
-
-    $that.addClass("waiting");
 
     $.ajax({
       url: url,
@@ -50,10 +49,10 @@ function bindPictureForm(du) {
         } else {
           alert('warning', data.message);
         }
-        $that.removeClass("waiting");
+        $that.button('reset');
       },
       fail: function(xhr) {
-        $that.removeClass("waiting");
+        $that.button('reset');
         alert('danger', "Somthing went wrong");
       },
     })
@@ -87,11 +86,10 @@ function bindLiveLinks() {
   $('.report a.love').click(function(e) {
     e.preventDefault();
     e.stopPropagation();
+    $(this).button('loading');
 
     var $that = $(this),
         url   = $that.data("url");
-
-    $that.addClass("waiting");
 
     $.ajax({
       url: url,
@@ -119,10 +117,10 @@ function bindLiveLinks() {
         } else {
           alert('warning', data.message);
         }
-        $that.removeClass("waiting");
+        $that.button('reset')
       },
       fail: function(xhr) {
-        $that.removeClass("waiting");
+        $that.button('reset')
         alert('danger', "Somthing went wrong");
       },
     })
