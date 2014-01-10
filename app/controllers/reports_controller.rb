@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_report, only: [:show, :update, :destroy]
+  before_action :set_report, only: [:show, :destroy]
 
   def index
     today_month = Date.today.strftime("%m-%Y")
@@ -67,7 +67,8 @@ class ReportsController < ApplicationController
   end
 
   def update
-    if @report.user == current_user
+    @report = current_user.reports.where(id: params[:id]).first
+    if @report
       revised_params = report_params
       revised_params[:picture_ids] ||= []
       @report.update_attributes(revised_params)
