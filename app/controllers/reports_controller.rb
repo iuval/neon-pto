@@ -68,17 +68,9 @@ class ReportsController < ApplicationController
 
   def update
     if @report.user == current_user
-      @report.update_attributes(report_params)
-      pictures = []
-      if params[:report][:picture_ids]
-        params[:report][:picture_ids].each do |picture_id|
-          picture = current_user.pictures.where(id: picture_id).first
-          if picture
-            pictures << picture
-          end
-        end
-      end
-      @report.pictures = pictures
+      revised_params = report_params
+      revised_params[:picture_ids] ||= []
+      @report.update_attributes(revised_params)
     else
       flash[:error] = I18n.t 'report.not_authorized'
       redirect_to reports_path and return
@@ -133,6 +125,6 @@ class ReportsController < ApplicationController
     # Never trust parameters from the scary internet,
     # only allow the white list through.
     def report_params
-      params.require(:report).permit(:user_id, :body, :title, :date, :published, :picture_ids)
+      params.require(:report).permit(:user_id, :body, :title, :date, :published, picture_ids: [])
     end
 end
