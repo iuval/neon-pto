@@ -24,6 +24,10 @@ a.btn:visited {
 }
 
 .drop_zone {
+  height: auto;
+}
+.drop_zone span {
+  display: block;
   height: 200px;
 }
 

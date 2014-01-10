@@ -20,7 +20,6 @@ function dropupload() {
         if (evt.target.readyState == FileReader.DONE) {
           var image = new Image();
           image.src = evt.target.result;
-          image.width = 250; // a fake resize
           $('.preview').empty().append(image);
           $('input.file').value = evt.target.result;
         }
