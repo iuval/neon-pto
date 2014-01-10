@@ -67,17 +67,22 @@ class ReportsController < ApplicationController
   end
 
   def update
-    @report.update_attributes(report_params)
-    pictures = []
-    if params[:report][:picture_ids]
-      params[:report][:picture_ids].each do |picture_id|
-        picture = current_user.pictures.where(id: picture_id).first
-        if picture
-          pictures << picture
+    if @report.user == current_user
+      @report.update_attributes(report_params)
+      pictures = []
+      if params[:report][:picture_ids]
+        params[:report][:picture_ids].each do |picture_id|
+          picture = current_user.pictures.where(id: picture_id).first
+          if picture
+            pictures << picture
+          end
         end
       end
+      @report.pictures = pictures
+    else
+      flash[:error] = I18n.t 'report.not_authorized'
+      redirect_to reports_path and return
     end
-    @report.pictures = pictures
 
     respond_to do |format|
       if @report.save
