@@ -6,17 +6,17 @@ describe Picture do
   end
 
   it 'should create a new instance given a valid attribute' do
-    @picture.should be_valid
+    expect(@picture).to be_valid
   end
 
   it 'should require a file' do
     @picture.remove_file!
-    @picture.should_not be_valid
+    expect(@picture).not_to be_valid
   end
 
   it 'should require a user' do
     @picture.user = nil
-    @picture.should_not be_valid
+    expect(@picture).not_to be_valid
   end
 
 
