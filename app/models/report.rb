@@ -19,6 +19,6 @@ class Report < ActiveRecord::Base
   end
 
   def love
-    user_love_reports.where('extract(month from created_at) = ?', Date.today.month).count
+    user_love_reports.count
   end
 end
