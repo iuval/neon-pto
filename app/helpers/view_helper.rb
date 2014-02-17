@@ -17,4 +17,12 @@ module ViewHelper
     when :alert then "alert alert-danger"
     end
   end
+
+  def love_class(index, love)
+    if index == love
+      'btn-danger'
+    else
+      'btn-default'
+    end
+  end
 end

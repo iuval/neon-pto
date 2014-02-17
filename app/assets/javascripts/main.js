@@ -104,14 +104,13 @@ function bindLiveLinks() {
           return;
         }
         if(data.status == 'ok'){
-          var love_span = $that.children('.love'),
-              love = parseInt(love_span .text());
           if ($that.hasClass('btn-danger')) {
-            love_span.text(love - 1);
             $that.removeClass('btn-danger');
           } else {
-            love_span.text(love + 1);
             $that.addClass('btn-danger');
+            $that.siblings().each(function() {
+              $(this).removeClass('btn-danger').addClass('btn-default');
+            });
           }
           alert('success', data.message);
         } else {

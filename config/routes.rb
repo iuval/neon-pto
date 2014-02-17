@@ -1,12 +1,10 @@
 NeonPto::Application.routes.draw do
   resources :reports, only: [:index, :show, :update, :new, :create] do
-    member do
-      post :toggle_love
-    end
     collection do
       get :edit
     end
   end
+  post 'reports/:id/toggle_love/:value', to: 'reports#toggle_love', as: :toggle_love
   resources :pictures, except: [:edit, :update]
 
   devise_for :users,
