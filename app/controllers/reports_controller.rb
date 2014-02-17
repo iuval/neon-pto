@@ -95,25 +95,32 @@ class ReportsController < ApplicationController
   end
 
   def toggle_love
-    report = Report.find(params[:id])
-    if report
-      if report.date.strftime("%m-%Y") == Date.today.strftime("%m-%Y")
-        love_count = current_user.toggle_love report
-        if love_count == UserLoveReport.max_love_per_month
-          render json: {
-            status: :error,
-            message: "You already loved #{UserLoveReport.max_love_per_month} reports this month."
-          } and return
+    love_value = params[:value]
+    if love_value and love_value.match /\A\d+?\Z/
+      love_value = love_value.to_i
+      report = Report.find(params[:id])
+      if report
+        if report.date.strftime("%m-%Y") == Date.today.strftime("%m-%Y")
+          love_hash = current_user.toggle_love(report, love_value)
+          if love_hash[:init] != love_hash[:final]
+            render json: {
+              status: :ok,
+              message: "#{love_hash[:final]} out of #{UserLoveReport.max_love_per_month} loves this month.",
+            }
+          else
+            render json: {
+              status: :error,
+              message: "You only have #{UserLoveReport.max_love_per_month - love_hash[:init]} loves left."
+            }
+          end
+        else
+          render json: { status: :error, message: 'You cannot love an old report.' }
         end
-        render json: {
-          status: :ok,
-          message: "#{love_count} out of #{UserLoveReport.max_love_per_month} loves this month.",
-        }
       else
-        render json: { status: :error, message: 'You cannot love an old report.' }
+        render json: { status: :error, message: 'Report does not exists.' }
       end
     else
-      render json: { status: :error, message: 'Report does not exists.' }
+      render json: { status: :error, message: 'Love value must be a number.' }
     end
   end
 

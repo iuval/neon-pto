@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   end
 
   def this_month_love_count
-    user_love_reports.where('extract(month from created_at) = ?', Date.today.month).count
+    user_love_reports.where('extract(month from created_at) = ?', Date.today.month).sum(:value)
   end
 
   def this_month_report
@@ -31,17 +31,38 @@ class User < ActiveRecord::Base
     pictures.where(report_id: nil)
   end
 
-  def toggle_love(report)
+  def toggle_love(report, value)
     love = user_love_reports.where(report_id: report).first
     love_count = this_month_love_count
+    init_love_count = love_count
     if love
-      love.destroy
-      love_count -= 1
-    else
-      if love_count < UserLoveReport.max_love_per_month
-        user_love_reports.create(report: report)
-        love_count += 1
+      # if the value is the same, delete love
+      # if it is diferent, update love
+      if love.value == value
+        love_count -= love.value
+        love.destroy
+      else
+        if love_count - love.value + value <= UserLoveReport.max_love_per_month
+          love_count = love_count - love.value + value
+          love.value = value
+          love.save
+        end
       end
+    else
+      if love_count + value <= UserLoveReport.max_love_per_month
+        love_count += value
+        user_love_reports.create(report: report, value: value)
+      end
+    end
+    { init: init_love_count, final: love_count  }
+  end
+
+  def love_for_report(report)
+    love = user_love_reports.where(report_id: report).first
+    if love
+      love.value
+    else
+      -1
     end
   end
 
