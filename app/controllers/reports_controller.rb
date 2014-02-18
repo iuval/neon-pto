@@ -3,19 +3,23 @@ class ReportsController < ApplicationController
   before_action :set_report, only: [:show, :destroy]
 
   def index
-    today_month = Date.today.strftime("%m-%Y")
     if params[:date]
-      @date = DateTime.strptime(params[:date], '%m-%Y').strftime("%m-%Y")
+      split =  params[:date].split '-'
+      if split.length == 2
+        @date = DateTime.strptime(params[:date], '%m-%Y')
+      else
+        @date = Date.today
+      end
     else
-      @date = today_month
+      @date = Date.today
     end
-    @is_current_month = @date == today_month
-    split = @date.split '-'
-    if split.length == 2
-      @reports = Report.published
-        .where('extract(month from date) = ?', split[0])
-        .where('extract(year from date) = ?', split[1])
-    end
+    @last_day = @date.at_beginning_of_month.next_month + Report.next_month_days_to_vote.days
+    @can_vote = @last_day >= Date.today
+    # TODO: have two field in reports table, one for month and one for year, instead of one for both
+    @reports = Report.published
+      .where('extract(month from date) = ?', @date.month)
+      .where('extract(year from date) = ?', @date.year)
+    @date = @date.strftime("%m-%Y")
   end
 
   def show
@@ -23,8 +27,9 @@ class ReportsController < ApplicationController
       flash[:alert] = I18n.t('report.not_published')
       redirect_to reports_path
     end
-
-    @is_current_month =  @report.date.strftime("%m-%Y") == Date.today.strftime("%m-%Y")
+    @last_day = Date.today.at_beginning_of_month.next_month + Report.next_month_days_to_vote.days
+    @can_vote = @report.date >= Date.today.at_beginning_of_month &&
+      @report.date <= @last_day
   end
 
   def edit
@@ -100,7 +105,8 @@ class ReportsController < ApplicationController
       love_value = love_value.to_i
       report = Report.find(params[:id])
       if report
-        if report.date.strftime("%m-%Y") == Date.today.strftime("%m-%Y")
+        if report.date >= Date.today.at_beginning_of_month &&
+          report.date <= Date.today.at_beginning_of_month.next_month + 5.days
           love_hash = current_user.toggle_love(report, love_value)
           if love_hash[:init] != love_hash[:final]
             render json: {

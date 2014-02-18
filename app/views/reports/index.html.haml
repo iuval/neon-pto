@@ -9,6 +9,6 @@
     - @reports.each do |report|
       %ul.list-group
         %li.list-group-item
-          =render partial: 'partials/report_summary', locals: { report: report, is_current_month: @is_current_month }
+          =render partial: 'partials/report_summary', locals: { report: report, can_vote: @can_vote }
   - else
     No reports

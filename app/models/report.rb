@@ -1,5 +1,6 @@
 class Report < ActiveRecord::Base
-  @@max_chars = ENV['report_max_chars'].to_i
+  @@MAX_CHARS = ENV['report_max_chars'].to_i
+  @@NEXT_MONTH_DAYS_TO_VOTE = ENV['next_month_days_to_vote'].to_i
 
   belongs_to :user
   has_many :pictures
@@ -7,7 +8,7 @@ class Report < ActiveRecord::Base
 
   validates :user, presence: :true
   validates :title, presence: :true
-  validates :body, presence: true, length: { maximum: @@max_chars }
+  validates :body, presence: true, length: { maximum: @@MAX_CHARS }
   validates :date, presence: true
 
   delegate :email, to: :user, prefix: true
@@ -15,7 +16,11 @@ class Report < ActiveRecord::Base
   scope :published, -> { where(published: true) }
 
   def self.max_chars
-    @@max_chars
+    @@MAX_CHARS
+  end
+
+  def self.next_month_days_to_vote
+    @@NEXT_MONTH_DAYS_TO_VOTE
   end
 
   def love

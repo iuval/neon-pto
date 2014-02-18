@@ -12,12 +12,13 @@
         %br
         = "with #{report.pictures.count } pictures"
       .action
-        - if is_current_month
+        - if @can_vote
           - love_for_this_report = current_user.love_for_report report
           - (1..UserLoveReport.max_love_per_month).each do |num|
             %a.btn.btn-xs.love{title: "#{ num } love", hrref: '#', class: love_class(num, love_for_this_report), data: { url: toggle_love_path(id: report, value: num) } }
               %span.glyphicon.glyphicon-heart
               %span= num
+          = "#{ (@last_day - Date.today).to_i } days to vote."
         - else
           %span.label{title: 'Love', class: current_user.user_love_reports.where(report_id: report.id).first ? 'label-danger' : 'label-default' }
             %span.glyphicon.glyphicon-heart
