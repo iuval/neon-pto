@@ -26,7 +26,7 @@ describe Report do
     end
 
     it 'should reject body too long' do
-      @report.body = 'a' * (Report.max_chars + 1)
+      @report.body = 'a' * (Report::MAX_CHARS + 1)
       expect(@report).not_to be_valid
     end
 

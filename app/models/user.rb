@@ -42,14 +42,14 @@ class User < ActiveRecord::Base
         love_count -= love.value
         love.destroy
       else
-        if love_count - love.value + value <= UserLoveReport.max_love_per_month
+        if love_count - love.value + value <= UserLoveReport::MAX_LOVE_PER_MONTH
           love_count = love_count - love.value + value
           love.value = value
           love.save
         end
       end
     else
-      if love_count + value <= UserLoveReport.max_love_per_month
+      if love_count + value <= UserLoveReport::MAX_LOVE_PER_MONTH
         love_count += value
         user_love_reports.create(report: report, value: value)
       end

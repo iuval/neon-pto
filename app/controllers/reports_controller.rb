@@ -13,7 +13,7 @@ class ReportsController < ApplicationController
     else
       @date = Date.today
     end
-    @last_day = @date.at_beginning_of_month.next_month + Report.next_month_days_to_vote.days
+    @last_day = @date.at_beginning_of_month.next_month + Report::NEXT_MONTH_DAYS_TO_VOTE.days
     @can_vote = @last_day >= Date.today
     # TODO: have two field in reports table, one for month and one for year, instead of one for both
     @reports = Report.published
@@ -27,7 +27,7 @@ class ReportsController < ApplicationController
       flash[:alert] = I18n.t('report.not_published')
       redirect_to reports_path
     end
-    @last_day = Date.today.at_beginning_of_month.next_month + Report.next_month_days_to_vote.days
+    @last_day = Date.today.at_beginning_of_month.next_month + Report::NEXT_MONTH_DAYS_TO_VOTE.days
     @can_vote = @report.date >= Date.today.at_beginning_of_month &&
       @report.date <= @last_day
   end
@@ -106,17 +106,17 @@ class ReportsController < ApplicationController
       report = Report.find(params[:id])
       if report
         if report.date >= Date.today.at_beginning_of_month &&
-          report.date <= Date.today.at_beginning_of_month.next_month + 5.days
+          report.date <= Date.today.at_beginning_of_month.next_month + UserLoveReport::MAX_LOVE_PER_MONTH
           love_hash = current_user.toggle_love(report, love_value)
           if love_hash[:init] != love_hash[:final]
             render json: {
               status: :ok,
-              message: "#{love_hash[:final]} out of #{UserLoveReport.max_love_per_month} loves this month.",
+              message: "#{love_hash[:final]} out of #{UserLoveReport::MAX_LOVE_PER_MONTH} loves this month.",
             }
           else
             render json: {
               status: :error,
-              message: "You only have #{UserLoveReport.max_love_per_month - love_hash[:init]} loves left."
+              message: "You only have #{UserLoveReport::MAX_LOVE_PER_MONTH - love_hash[:init]} loves left."
             }
           end
         else

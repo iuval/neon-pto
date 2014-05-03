@@ -12,8 +12,8 @@
   .form-group
     = f.label :body
     = f.text_area :body, class: 'form-control counted', placeholder: 'Type in your adventure!', rows: 10
-    %h6.pull-right{id: 'counter', data: { default: Report.max_chars }}
-      = "#{Report.max_chars} characters remaining"
+    %h6.pull-right{id: 'counter', data: { default: Report::MAX_CHARS }}
+      = "#{Report::MAX_CHARS} characters remaining"
   .form-group
     = f.label :date
     = f.date_select :date, value: Date.today.strftime('%m-%d-%Y'), class: 'form-control'
