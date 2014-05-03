@@ -31,7 +31,7 @@ describe Report do
     end
 
     it 'should require a date' do
-      @report.date = nil
+      @report.month = nil
       expect(@report).not_to be_valid
     end
   end

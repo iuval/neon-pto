@@ -2,7 +2,8 @@
   .row
     =render partial: 'partials/report_summary', locals: { report: @report, is_current_month: @is_current_month }
   .row
-    - if @report.user == current_user
+    - today = Date.today
+    - if @report.user == current_user && @report.month == today.month && @report.year == today.year
       = link_to 'Edit', edit_reports_path(@report), class: 'btn btn-info btn-large pull-right'
   .row
     %p.lead= @report.body

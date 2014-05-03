@@ -4,5 +4,7 @@ en:
   report:
     not_published: 'This report is not published.'
     not_authorized: 'You can only edit your own report.'
+    ok_love: "You have %{remaining} loves left to give. %{value}/%{total}"
+    no_love: "You don't have that many loves left! Only %{remaining} loves left."
   support:
     email_sent: 'Email sent. Thanks!'

@@ -16,10 +16,8 @@ class ReportsController < ApplicationController
     @last_day = @date.at_beginning_of_month.next_month + Report::NEXT_MONTH_DAYS_TO_VOTE.days
     @can_vote = @last_day >= Date.today
     # TODO: have two field in reports table, one for month and one for year, instead of one for both
-    @reports = Report.published
-      .where('extract(month from date) = ?', @date.month)
-      .where('extract(year from date) = ?', @date.year)
-    @date = @date.strftime("%m-%Y")
+    @reports = Report.published.where(month: @date.month, year: @date.year)
+    @date    = @date.strftime("%m-%Y")
   end
 
   def show
@@ -28,8 +26,7 @@ class ReportsController < ApplicationController
       redirect_to reports_path
     end
     @last_day = Date.today.at_beginning_of_month.next_month + Report::NEXT_MONTH_DAYS_TO_VOTE.days
-    @can_vote = @report.date >= Date.today.at_beginning_of_month &&
-      @report.date <= @last_day
+    @can_vote = @report.can_vote?
   end
 
   def edit
@@ -46,7 +43,11 @@ class ReportsController < ApplicationController
     if current_user.has_this_month_report?
       redirect_to root_path
     else
-      @report = current_user.reports.new(report_params)
+      revised_params = report_params
+      revised_params[:day]   = revised_params.delete('date(3i)')
+      revised_params[:month] = revised_params.delete('date(2i)')
+      revised_params[:year]  = revised_params.delete('date(1i)')
+      @report = current_user.reports.new(revised_params)
       if params[:report][:picture_ids]
         params[:report][:picture_ids].each do |picture_id|
           picture = current_user.pictures.where(id: picture_id).first
@@ -76,6 +77,9 @@ class ReportsController < ApplicationController
     if @report
       revised_params = report_params
       revised_params[:picture_ids] ||= []
+      revised_params[:day]   = revised_params.delete('date(3i)')
+      revised_params[:month] = revised_params.delete('date(2i)')
+      revised_params[:year]  = revised_params.delete('date(1i)')
       @report.update_attributes(revised_params)
     else
       flash[:error] = I18n.t 'report.not_authorized'
@@ -105,18 +109,23 @@ class ReportsController < ApplicationController
       love_value = love_value.to_i
       report = Report.find(params[:id])
       if report
-        if report.date >= Date.today.at_beginning_of_month &&
-          report.date <= Date.today.at_beginning_of_month.next_month + UserLoveReport::MAX_LOVE_PER_MONTH
+        if report.can_vote?
           love_hash = current_user.toggle_love(report, love_value)
           if love_hash[:init] != love_hash[:final]
             render json: {
               status: :ok,
-              message: "#{love_hash[:final]} out of #{UserLoveReport::MAX_LOVE_PER_MONTH} loves this month.",
+              message: t('report.ok_love',
+                         remaining: UserLoveReport::MAX_LOVE_PER_MONTH - love_hash[:final],
+                         value: love_hash[:final],
+                         total: UserLoveReport::MAX_LOVE_PER_MONTH
+                        )
             }
           else
             render json: {
               status: :error,
-              message: "You only have #{UserLoveReport::MAX_LOVE_PER_MONTH - love_hash[:init]} loves left."
+              message: t('report.no_love',
+                         remaining: UserLoveReport::MAX_LOVE_PER_MONTH - love_hash[:final]
+                        )
             }
           end
         else

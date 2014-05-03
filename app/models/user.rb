@@ -15,12 +15,12 @@ class User < ActiveRecord::Base
     end
   end
 
-  def this_month_love_count
-    user_love_reports.where('extract(month from created_at) = ?', Date.today.month).sum(:value)
+  def this_month_love_count(month = Date.today.month)
+    UserLoveReport.joins(:report).where(reports: { month: month }).sum(:value)
   end
 
-  def this_month_report
-    reports.where('extract(month from created_at) = ?', Date.today.month).first
+  def this_month_report(month = Date.today.month)
+    reports.where(month:  month).first
   end
 
   def has_this_month_report?
@@ -32,8 +32,8 @@ class User < ActiveRecord::Base
   end
 
   def toggle_love(report, value)
-    love = user_love_reports.where(report_id: report).first
-    love_count = this_month_love_count
+    love            = user_love_reports.where(report_id: report).first
+    love_count      = this_month_love_count(report.month)
     init_love_count = love_count
     if love
       # if the value is the same, delete love
