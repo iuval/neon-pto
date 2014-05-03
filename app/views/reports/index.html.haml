@@ -10,5 +10,8 @@
       %ul.list-group
         %li.list-group-item
           =render partial: 'partials/report_summary', locals: { report: report, can_vote: @can_vote }
+    %a.btn.btn-primary.btn-lg.back-to-top{id:"back-to-top", href: "#", role:"button", title:"Click to return on the top page",
+      data: { toggle: "tooltip", placement: "left"}}
+      %span.glyphicon.glyphicon-chevron-up
   - else
     No reports
