@@ -31,6 +31,7 @@ gem 'devise'
 gem 'omniauth-google-oauth2'
 
 gem 'haml-rails'
+gem 'redcarpet'
 
 # System
 gem 'pg'

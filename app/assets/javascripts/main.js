@@ -16,8 +16,10 @@ function load() {
   });
   $('#back-to-top').tooltip('show');
 
+  $("#report_body").markdown();
+
   bindLiveLinks();
-  bindCharCounter();
+//  bindCharCounter();
   bindMonthSelector();
   du = new dropupload();
   du.init();

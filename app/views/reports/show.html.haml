@@ -6,7 +6,8 @@
     - if @report.user == current_user && @report.month == today.month && @report.year == today.year
       = link_to 'Edit', edit_reports_path(@report), class: 'btn btn-info btn-large pull-right'
   .row
-    %p.lead= @report.body
+    .body
+      = Redcarpet::Markdown.new(Redcarpet::Render::HTML, {}).render(@report.body).html_safe
   .row
     - @report.pictures.each do |p|
       .thumbnail
