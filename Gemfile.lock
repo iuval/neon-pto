@@ -31,6 +31,9 @@ GEM
     awesome_print (1.2.0)
     bcrypt-ruby (3.1.2)
     builder (3.1.4)
+    byebug (3.2.0)
+      columnize (~> 0.8)
+      debugger-linecache (~> 1.2)
     capybara (2.2.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -54,15 +57,10 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     colored (1.2)
-    columnize (0.3.6)
+    columnize (0.9.0)
     daemons (1.1.9)
     database_cleaner (1.2.0)
-    debugger (1.6.3)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.2.4)
     debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.2.4)
     devise (3.2.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -268,12 +266,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug
   capybara
   carrierwave
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
   database_cleaner
-  debugger
   devise
   factory_girl_rails
   faker

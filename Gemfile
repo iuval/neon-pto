@@ -40,7 +40,7 @@ gem 'fog'
 
 group :development, :test do
   gem 'factory_girl_rails'
-  gem 'debugger'
+  gem 'byebug'
   gem 'rspec-rails'
   gem 'spork-rails'
   gem 'thin'

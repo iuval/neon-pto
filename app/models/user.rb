@@ -15,16 +15,19 @@ class User < ActiveRecord::Base
     end
   end
 
-  def this_month_love_count(month = Date.today.month)
-    UserLoveReport.joins(:report).where(reports: { month: month }).sum(:value)
+  def this_month_love_count(month = Date.today.month, year = Date.today.year)
+    UserLoveReport.joins(:report).where(reports: {
+      month: month,
+      year: year
+    }).sum(:value)
   end
 
-  def this_month_report(month = Date.today.month)
-    reports.where(month:  month).first
+  def this_month_report(month = Date.today.month, year = Date.today.year)
+    reports.where(month: month, year: year).first
   end
 
   def has_this_month_report?
-    !this_month_report.nil?
+    this_month_report.present?
   end
 
   def pictures_without_report
