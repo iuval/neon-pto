@@ -22,9 +22,10 @@ module NeonPto
     config.assets.initialize_on_precompile = false
 
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
-    config.assets.precompile += ['gliphicons-halflings-regular.ttf',
-                         'gliphicons-halflings-regular.eot',
-                         'gliphicons-halflings-regular.svg',
-                         'gliphicons-halflings-regular.woff']
+    config.assets.precompile += ['glyphicons-halflings-regular.ttf',
+                         'glyphicons-halflings-regular.eot',
+                         'glyphicons-halflings-regular.svg',
+                         'glyphicons-halflings-regular.woff',
+                         'glyphicons-halflings-regular.woff2']
   end
 end
