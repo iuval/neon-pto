@@ -20,7 +20,7 @@
 
 *.DS_Store
 
-dev.rb
+.env
 
 # ignore test images
 public/uploads/
